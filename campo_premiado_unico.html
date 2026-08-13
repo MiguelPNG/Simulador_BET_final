@@ -1,0 +1,2948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campo Premiado</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    background: #303030;
+
+    color: white;
+
+    overflow-x: hidden;
+
+}
+
+
+/* FUNDO VERMELHO DIFUSO */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    top: -180px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 900px;
+
+    height: 350px;
+
+    background:
+        rgba(255, 0, 0, 0.18);
+
+    filter:
+        blur(100px);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    bottom: -180px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 900px;
+
+    height: 350px;
+
+    background:
+        rgba(255, 0, 0, 0.20);
+
+    filter:
+        blur(100px);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+/* TELAS */
+
+.tela {
+
+    min-height: 100vh;
+
+    width: 100%;
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 25px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.tela.ativa {
+
+    display: flex;
+
+}
+
+
+/* VIDRO FOSCO */
+
+.glass {
+
+    background:
+        rgba(55, 55, 55, 0.45);
+
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
+
+    border:
+        1px solid
+        rgba(255, 50, 50, 0.65);
+
+    box-shadow:
+
+        0 0 7px
+        rgba(255, 0, 0, 0.65),
+
+        0 0 25px
+        rgba(255, 0, 0, 0.25),
+
+        inset 0 0 30px
+        rgba(255, 0, 0, 0.05);
+
+}
+
+
+/* LOGIN */
+
+.login {
+
+    width: 100%;
+
+    max-width: 400px;
+
+    padding: 40px 35px;
+
+    border-radius: 22px;
+
+}
+
+
+.login h1 {
+
+    text-align: center;
+
+    font-size: 34px;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 12px
+        rgba(255, 0, 0, 0.4);
+
+}
+
+
+.subtitulo {
+
+    text-align: center;
+
+    color: #bdbdbd;
+
+    font-size: 14px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.campo {
+
+    margin-bottom: 20px;
+
+}
+
+
+.campo label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #ddd;
+
+    font-size: 14px;
+
+}
+
+
+.campo input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    background:
+        rgba(0,0,0,0.38);
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+}
+
+
+.campo input::placeholder {
+
+    color: #777;
+
+}
+
+
+.campo input:focus {
+
+    border-color: #ff2222;
+
+    box-shadow:
+        0 0 10px
+        rgba(255,0,0,0.4);
+
+}
+
+
+/* BOTÃO ENTRAR */
+
+.botao-entrar {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #c90000;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    box-shadow:
+        0 0 12px
+        rgba(255,0,0,0.5);
+
+}
+
+
+.botao-entrar:hover {
+
+    background: #ed0000;
+
+    box-shadow:
+
+        0 0 12px #ff0000,
+
+        0 0 25px
+        rgba(255,0,0,0.5);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* MENU */
+
+.menu {
+
+    width: 100%;
+
+    max-width: 950px;
+
+    text-align: center;
+
+}
+
+
+.menu h1 {
+
+    font-size: 36px;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 12px
+        rgba(255,0,0,0.35);
+
+}
+
+
+.menu-subtitulo {
+
+    color: #aaa;
+
+    margin-bottom: 35px;
+
+}
+
+
+.jogos {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.jogo {
+
+    min-height: 220px;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    text-decoration: none;
+
+    color: white;
+
+}
+
+
+.jogo:hover {
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        #ff0000;
+
+    box-shadow:
+
+        0 0 10px #ff0000,
+
+        0 0 30px
+        rgba(255,0,0,0.5),
+
+        inset 0 0 25px
+        rgba(255,0,0,0.1);
+
+}
+
+
+.icone {
+
+    font-size: 50px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.jogo h2 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.jogo p {
+
+    color: #aaa;
+
+    font-size: 13px;
+
+}
+
+
+/* JOGOS */
+
+.jogo-container {
+
+    width: 100%;
+
+    max-width: 950px;
+
+    text-align: center;
+
+}
+
+
+.jogo-container h1 {
+
+    font-size: 34px;
+
+    margin-bottom: 20px;
+
+    text-shadow:
+        0 0 12px
+        rgba(255,0,0,0.4);
+
+}
+
+
+.painel {
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+}
+
+
+.saldo {
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    color: #ff4040;
+
+    margin: 15px;
+
+}
+
+
+/* BOTÕES */
+
+button {
+
+    padding: 11px 20px;
+
+    margin: 7px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,50,50,0.6);
+
+    background:
+        rgba(40,40,40,0.7);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+
+button:hover:not(:disabled) {
+
+    background:
+        rgba(120,0,0,0.7);
+
+    border-color:
+        #ff0000;
+
+    box-shadow:
+
+        0 0 10px #ff0000,
+
+        0 0 20px
+        rgba(255,0,0,0.4);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+button:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+}
+
+
+input {
+
+    padding: 10px;
+
+    width: 120px;
+
+    border-radius: 8px;
+
+    border: 1px solid #555;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    color: white;
+
+    outline: none;
+
+}
+
+
+/* VOLTAR */
+
+.botao-voltar {
+
+    display: inline-block;
+
+    padding: 11px 20px;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,50,50,0.6);
+
+    background:
+        rgba(40,40,40,0.7);
+
+    color: white;
+
+    text-decoration: none;
+
+    transition: 0.25s;
+
+}
+
+
+.botao-voltar:hover {
+
+    background:
+        rgba(120,0,0,0.7);
+
+    border-color:
+        #ff0000;
+
+    box-shadow:
+        0 0 10px #ff0000;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* RESULTADO */
+
+.resultado {
+
+    min-height: 35px;
+
+    margin: 18px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+
+/* ROLETA */
+
+.pointer {
+
+    font-size: 40px;
+
+}
+
+
+#wheel {
+
+    width: 320px;
+
+    height: 320px;
+
+    max-width: 80vw;
+
+    max-height: 80vw;
+
+    margin:
+        10px auto 25px;
+
+    border-radius: 50%;
+
+    border: 8px solid #666;
+
+    background:
+
+        conic-gradient(
+
+            #d4a900
+            0deg 176deg,
+
+            #38a85a
+            176deg 353deg,
+
+            #287bdc
+            353deg 360deg
+
+        );
+
+    transition:
+
+        transform 5s
+        cubic-bezier(.2,.8,.2,1);
+
+    box-shadow:
+
+        0 0 15px
+        rgba(255,0,0,0.35);
+
+}
+
+
+.selecionado {
+
+    background:
+        #850000 !important;
+
+    border-color:
+        #ff0000;
+
+    box-shadow:
+        0 0 10px #ff0000;
+
+}
+
+
+/* CAMPO */
+
+#tabuleiro {
+
+    width: 430px;
+
+    max-width: 95vw;
+
+    margin: 25px auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 5px;
+
+}
+
+
+.quadrado {
+
+    aspect-ratio: 1;
+
+    background: #666;
+
+    border-radius: 8px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.quadrado:hover {
+
+    background: #7a2020;
+
+    box-shadow:
+        0 0 8px
+        rgba(255,0,0,0.5);
+
+}
+
+
+/* ROCKET */
+
+#multiplicador {
+
+    font-size: 48px;
+
+    color: #ff3030;
+
+    margin: 20px;
+
+    text-shadow:
+        0 0 15px
+        rgba(255,0,0,0.6);
+
+}
+
+
+#area {
+
+    width: 100%;
+
+    height: 400px;
+
+    border-radius: 18px;
+
+    border:
+        2px solid
+        rgba(255,40,40,0.6);
+
+    background:
+
+        linear-gradient(
+            #62676c,
+            #292d31
+        );
+
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(0,0,0,0.4);
+
+}
+
+
+#rocket {
+
+    position: absolute;
+
+    left: 40px;
+
+    bottom: 20px;
+
+    font-size: 45px;
+
+}
+
+
+/* CELULAR */
+
+@media(max-width:700px) {
+
+    .jogos {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .jogo {
+
+        min-height: 150px;
+
+    }
+
+
+    .login {
+
+        padding:
+            35px 25px;
+
+    }
+
+
+    #area {
+
+        height: 300px;
+
+    }
+
+}
+</style>
+</head>
+<body>
+
+<section id="login" class="tela ativa">
+
+    <div class="login glass">
+
+        <h1>
+            Bem-vindo
+        </h1>
+
+        <p class="subtitulo">
+            Digite seus dados para continuar
+        </p>
+
+
+        <form onsubmit="entrar(event)">
+
+            <div class="campo">
+
+                <label>
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Digite seu nome"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label>
+                    Idade
+                </label>
+
+                <input
+                    type="number"
+                    id="idade"
+                    placeholder="Digite sua idade"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="botao-entrar"
+            >
+                ENTRAR
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function entrar(event) {
+
+    event.preventDefault();
+
+    const nome =
+        document.getElementById("nome").value;
+
+    const idade =
+        document.getElementById("idade").value;
+
+    if (
+        nome.trim() === "" ||
+        idade.trim() === ""
+    ) {
+        return;
+    }
+
+    window.location.href = "menu.html";
+
+}
+
+</script>
+
+<section id="menu" class="tela">
+
+    <div class="menu">
+
+        <h1>
+            Escolha um jogo
+        </h1>
+
+        <p class="menu-subtitulo">
+            Selecione uma opção para começar
+        </p>
+
+
+        <!-- JOGOS -->
+
+        <div class="jogos">
+
+
+            <!-- CAMPO PREMIADO -->
+
+            <a
+                href="bomb.html"
+                class="jogo glass"
+            >
+
+                <div class="icone">
+                    💣
+                </div>
+
+                <h2>
+                    Campo Premiado
+                </h2>
+
+                <p>
+                    Encontre os prêmios
+                </p>
+
+            </a>
+
+
+            <!-- ROCKET -->
+
+            <a
+                href="rocket.html"
+                class="jogo glass"
+            >
+
+                <div class="icone">
+                    🚀
+                </div>
+
+                <h2>
+                    Rocket
+                </h2>
+
+                <p>
+                    Acompanhe o multiplicador
+                </p>
+
+            </a>
+
+
+            <!-- ROLETA -->
+
+            <a
+                href="roleta.html"
+                class="jogo glass"
+            >
+
+                <div class="icone">
+                    🎡
+                </div>
+
+                <h2>
+                    Roleta
+                </h2>
+
+                <p>
+                    Roleta das cores
+                </p>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- BOTÃO SAIBA MAIS -->
+
+        <button
+            class="botao-saiba"
+            onclick="abrirInfo()"
+        >
+            SAIBA MAIS
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     JANELA DO SAIBA MAIS
+===================================================== -->
+
+
+<div
+    id="infoJogos"
+    class="info-overlay"
+>
+
+
+    <div class="info-caixa glass">
+
+
+        <!-- BOTÃO FECHAR -->
+
+        <button
+            class="fechar-info"
+            onclick="fecharInfo()"
+        >
+            ×
+        </button>
+
+
+        <!-- TÍTULO -->
+
+        <h1>
+            📖 Como jogar
+        </h1>
+
+
+        <p class="info-intro">
+
+            Confira abaixo como funciona cada jogo
+            e onde clicar para começar.
+
+        </p>
+
+
+
+        <!-- CAMPO PREMIADO -->
+
+        <h2>
+            💣 Campo Premiado
+        </h2>
+
+
+        <p>
+
+            Digite a quantidade de pontos virtuais
+            que deseja utilizar no campo indicado
+            e clique em <strong>INICIAR</strong>.
+
+        </p>
+
+
+        <p>
+
+            Depois disso, aparecerá um tabuleiro
+            com várias casas. Clique em uma delas
+            para descobrir o resultado.
+
+        </p>
+
+
+
+        <!-- ROCKET -->
+
+        <h2>
+            🚀 Rocket
+        </h2>
+
+
+        <p>
+
+            Digite a quantidade de pontos virtuais
+            e clique em <strong>COMEÇAR</strong>.
+
+            O foguete começará a subir e o
+            multiplicador aumentará com o tempo.
+
+        </p>
+
+
+        <p>
+
+            Enquanto o foguete estiver subindo,
+            clique em <strong>RETIRAR</strong>
+            para encerrar a rodada e receber
+            o valor correspondente ao multiplicador.
+
+        </p>
+
+
+
+        <!-- ROLETA -->
+
+        <h2>
+            🎡 Roleta
+        </h2>
+
+
+        <p>
+
+            Primeiro, escolha uma das três opções:
+
+            <strong>
+                amarelo, verde ou azul
+            </strong>.
+
+        </p>
+
+
+        <p>
+
+            Depois, digite a quantidade de pontos
+            virtuais e clique em <strong>GIRAR</strong>.
+
+        </p>
+
+
+        <p>
+
+            A roleta irá girar e, depois de alguns
+            segundos, mostrará o resultado da rodada.
+
+        </p>
+
+
+
+        <!-- AVISO -->
+
+        <div class="aviso-info">
+
+            <strong>
+                💡 Dica:
+            </strong>
+
+            <br>
+            <br>
+
+            Todos os jogos utilizam apenas
+            pontos virtuais.
+
+            <br>
+            <br>
+
+            Para voltar à tela principal de jogos,
+            clique em
+            <strong>← Voltar ao menu</strong>
+            dentro de cada jogo.
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+
+<script>
+
+
+function abrirInfo() {
+
+    document
+        .getElementById("infoJogos")
+        .classList.add("mostrar");
+
+}
+
+
+
+function fecharInfo() {
+
+    document
+        .getElementById("infoJogos")
+        .classList.remove("mostrar");
+
+}
+
+
+/*
+   Também permite fechar a janela
+   clicando fora da caixa.
+*/
+
+document
+    .getElementById("infoJogos")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                fecharInfo();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+<section id="bomb" class="tela">
+
+    <div class="jogo-container">
+
+        <h1>
+            Campo Premiado
+        </h1>
+
+
+        <div class="painel glass">
+
+
+            <div class="saldo">
+
+                Pontos:
+                <span id="saldo">
+                    100
+                </span>
+
+            </div>
+
+
+            <label>
+                Pontos virtuais
+            </label>
+
+
+            <br>
+
+
+            <input
+                id="aposta"
+                type="number"
+                value="10"
+                min="1"
+            >
+
+
+            <br>
+
+
+            <button onclick="iniciar()">
+                INICIAR
+            </button>
+
+
+            <div id="tabuleiro"></div>
+
+
+            <div
+                id="resultado"
+                class="resultado"
+            ></div>
+
+
+            <a
+                href="menu.html"
+                class="botao-voltar"
+            >
+                ← Voltar ao menu
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+let saldo = 100;
+
+let premios = [];
+
+let jogoAtivo = false;
+
+
+function criarTabuleiro() {
+
+    const tabuleiro =
+        document.getElementById(
+            "tabuleiro"
+        );
+
+    tabuleiro.innerHTML = "";
+
+
+    for (
+        let i = 0;
+        i < 25;
+        i++
+    ) {
+
+        const casa =
+            document.createElement(
+                "div"
+            );
+
+        casa.className =
+            "quadrado";
+
+        casa.onclick =
+            function() {
+
+                clicar(i);
+
+            };
+
+        tabuleiro.appendChild(casa);
+
+    }
+
+}
+
+
+criarTabuleiro();
+
+
+function iniciar() {
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    saldo -= aposta;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    premios =
+        new Array(25).fill(0);
+
+
+    const escolhidos = [];
+
+
+    while (
+        escolhidos.length < 3
+    ) {
+
+        const numero =
+            Math.floor(
+                Math.random() * 25
+            );
+
+        if (
+            !escolhidos.includes(
+                numero
+            )
+        ) {
+
+            escolhidos.push(
+                numero
+            );
+
+        }
+
+    }
+
+
+    premios[
+        escolhidos[0]
+    ] = 3;
+
+    premios[
+        escolhidos[1]
+    ] = 2;
+
+    premios[
+        escolhidos[2]
+    ] = 2;
+
+
+    jogoAtivo = true;
+
+
+    document.getElementById(
+        "resultado"
+    ).textContent = "";
+
+
+    criarTabuleiro();
+
+}
+
+
+function clicar(posicao) {
+
+    if (!jogoAtivo) {
+        return;
+    }
+
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    const casas =
+        document.querySelectorAll(
+            ".quadrado"
+        );
+
+
+    casas.forEach(
+        function(casa, i) {
+
+            if (
+                premios[i] === 3
+            ) {
+
+                casa.innerHTML = "💎";
+
+                casa.style.background =
+                    "#9a7d16";
+
+            }
+
+            else if (
+                premios[i] === 2
+            ) {
+
+                casa.innerHTML = "💰";
+
+                casa.style.background =
+                    "#287a48";
+
+            }
+
+            else {
+
+                casa.innerHTML = "💣";
+
+                casa.style.background =
+                    "#8b2929";
+
+            }
+
+        }
+    );
+
+
+    if (
+        premios[posicao] === 3
+    ) {
+
+        saldo += aposta * 3;
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💎 Prêmio 3x!";
+
+    }
+
+    else if (
+        premios[posicao] === 2
+    ) {
+
+        saldo += aposta * 2;
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💰 Prêmio 2x!";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💣 Não havia prêmio.";
+
+    }
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    jogoAtivo = false;
+
+}
+
+</script>
+
+<section id="rocket" class="tela">
+
+    <div class="jogo-container">
+
+        <h1>
+            Rocket
+        </h1>
+
+
+        <div class="painel glass">
+
+
+            <div class="saldo">
+
+                Pontos:
+                <span id="saldo">
+                    100
+                </span>
+
+            </div>
+
+
+            <label>
+                Pontos virtuais
+            </label>
+
+
+            <br>
+
+
+            <input
+                id="aposta"
+                type="number"
+                value="10"
+                min="1"
+            >
+
+
+            <br>
+
+
+            <button
+                id="começar"
+                onclick="iniciar()"
+            >
+                COMEÇAR
+            </button>
+
+
+            <button
+                id="retirar"
+                onclick="retirar()"
+                disabled
+            >
+                RETIRAR
+            </button>
+
+
+            <div id="multiplicador">
+                1.00x
+            </div>
+
+
+            <div id="area">
+
+                <div id="rocket">
+                    🚀
+                </div>
+
+            </div>
+
+
+            <div
+                id="resultado"
+                class="resultado"
+            ></div>
+
+
+            <a
+                href="menu.html"
+                class="botao-voltar"
+            >
+                ← Voltar ao menu
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+let saldo = 100;
+
+let aposta = 0;
+
+let multiplicador = 1;
+
+let intervalo = null;
+
+let inicio = 0;
+
+let ativo = false;
+
+
+function iniciar() {
+
+    if (ativo) {
+        return;
+    }
+
+
+    aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    saldo -= aposta;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    multiplicador = 1;
+
+    inicio = Date.now();
+
+    ativo = true;
+
+
+    document.getElementById(
+        "começar"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "retirar"
+    ).disabled = false;
+
+
+    intervalo =
+        setInterval(
+            atualizar,
+            30
+        );
+
+}
+
+
+function atualizar() {
+
+    const tempo =
+        Date.now() - inicio;
+
+
+    multiplicador =
+        Math.pow(
+            1.03,
+            tempo / 250
+        );
+
+
+    document.getElementById(
+        "multiplicador"
+    ).textContent =
+        multiplicador.toFixed(2) + "x";
+
+
+    const rocket =
+        document.getElementById(
+            "rocket"
+        );
+
+
+    rocket.style.left =
+        (
+            40 +
+            tempo * 0.08
+        ) + "px";
+
+
+    rocket.style.bottom =
+        (
+            20 +
+            tempo * 0.03
+        ) + "px";
+
+}
+
+
+function retirar() {
+
+    if (!ativo) {
+        return;
+    }
+
+
+    clearInterval(
+        intervalo
+    );
+
+
+    const premio =
+        Math.round(
+            aposta *
+            multiplicador
+        );
+
+
+    saldo += premio;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    document.getElementById(
+        "resultado"
+    ).innerHTML =
+        "🎉 Você retirou em " +
+        multiplicador.toFixed(2) +
+        "x e recebeu " +
+        premio +
+        " pontos.";
+
+
+    finalizar();
+
+}
+
+
+function finalizar() {
+
+    ativo = false;
+
+
+    document.getElementById(
+        "começar"
+    ).disabled = false;
+
+
+    document.getElementById(
+        "retirar"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "rocket"
+    ).style.left = "40px";
+
+
+    document.getElementById(
+        "rocket"
+    ).style.bottom = "20px";
+
+
+    document.getElementById(
+        "multiplicador"
+    ).textContent = "1.00x";
+
+}
+
+</script>
+
+<section id="roleta" class="tela">
+
+    <div class="jogo-container">
+
+        <h1>
+            Roleta das Cores
+        </h1>
+
+
+        <div class="painel glass">
+
+
+            <div class="pointer">
+                ▼
+            </div>
+
+
+            <div id="wheel"></div>
+
+
+            <h3>
+                Escolha uma cor
+            </h3>
+
+
+            <button
+                id="amarelo"
+                onclick="escolher('amarelo')"
+            >
+                🟡 Amarelo
+            </button>
+
+
+            <button
+                id="verde"
+                onclick="escolher('verde')"
+            >
+                🟢 Verde
+            </button>
+
+
+            <button
+                id="azul"
+                onclick="escolher('azul')"
+            >
+                🔵 Azul
+            </button>
+
+
+            <br><br>
+
+
+            <label>
+                Pontos virtuais
+            </label>
+
+
+            <br>
+
+
+            <input
+                id="aposta"
+                type="number"
+                value="10"
+                min="1"
+            >
+
+
+            <br>
+
+
+            <button
+                id="girar"
+                onclick="girar()"
+            >
+                GIRAR
+            </button>
+
+
+            <div class="saldo">
+
+                Pontos:
+                <span id="saldo">
+                    100
+                </span>
+
+            </div>
+
+
+            <div
+                id="resultado"
+                class="resultado"
+            ></div>
+
+
+            <a
+                href="menu.html"
+                class="botao-voltar"
+            >
+                ← Voltar ao menu
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+let corEscolhida = "";
+
+let saldo = 100;
+
+let rotacao = 0;
+
+
+function escolher(cor) {
+
+    corEscolhida = cor;
+
+
+    document
+        .querySelectorAll(
+            "#amarelo, #verde, #azul"
+        )
+        .forEach(
+            function(botao) {
+
+                botao.classList.remove(
+                    "selecionado"
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById(cor)
+        .classList.add(
+            "selecionado"
+        );
+
+}
+
+
+function girar() {
+
+
+    if (
+        corEscolhida === ""
+    ) {
+
+        alert(
+            "Escolha uma cor primeiro!"
+        );
+
+        return;
+
+    }
+
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "girar"
+    ).disabled = true;
+
+
+    const sorteio =
+        Math.random() * 360;
+
+
+    rotacao +=
+        1800 + sorteio;
+
+
+    document.getElementById(
+        "wheel"
+    ).style.transform =
+        "rotate(" +
+        rotacao +
+        "deg)";
+
+
+    setTimeout(
+        function() {
+
+
+            const angulo =
+                rotacao % 360;
+
+
+            let resultado;
+
+
+            if (
+                angulo < 176
+            ) {
+
+                resultado =
+                    "amarelo";
+
+            }
+
+            else if (
+                angulo < 353
+            ) {
+
+                resultado =
+                    "verde";
+
+            }
+
+            else {
+
+                resultado =
+                    "azul";
+
+            }
+
+
+            if (
+                resultado ===
+                corEscolhida
+            ) {
+
+                saldo += aposta;
+
+
+                document
+                    .getElementById(
+                        "resultado"
+                    )
+                    .innerHTML =
+                    "🎉 Você acertou! +" +
+                    aposta +
+                    " pontos.";
+
+            }
+
+            else {
+
+                saldo -= aposta;
+
+
+                document
+                    .getElementById(
+                        "resultado"
+                    )
+                    .innerHTML =
+                    "A cor sorteada foi " +
+                    resultado +
+                    ".";
+
+            }
+
+
+            document
+                .getElementById(
+                    "saldo"
+                )
+                .textContent =
+                saldo;
+
+
+            document
+                .getElementById(
+                    "girar"
+                )
+                .disabled = false;
+
+
+        },
+        5000
+    );
+
+}
+
+</script>
+
+<script>
+
+
+function entrar(event) {
+
+    event.preventDefault();
+
+    const nome =
+        document.getElementById("nome").value;
+
+    const idade =
+        document.getElementById("idade").value;
+
+    if (
+        nome.trim() === "" ||
+        idade.trim() === ""
+    ) {
+        return;
+    }
+
+    mostrarTela("menu");
+
+}
+
+
+
+
+
+function abrirInfo() {
+
+    document
+        .getElementById("infoJogos")
+        .classList.add("mostrar");
+
+}
+
+
+
+function fecharInfo() {
+
+    document
+        .getElementById("infoJogos")
+        .classList.remove("mostrar");
+
+}
+
+
+/*
+   Também permite fechar a janela
+   clicando fora da caixa.
+*/
+
+document
+    .getElementById("infoJogos")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                fecharInfo();
+
+            }
+
+        }
+    );
+
+
+
+
+
+let saldo = 100;
+
+let premios = [];
+
+let jogoAtivo = false;
+
+
+function criarTabuleiro() {
+
+    const tabuleiro =
+        document.getElementById(
+            "tabuleiro"
+        );
+
+    tabuleiro.innerHTML = "";
+
+
+    for (
+        let i = 0;
+        i < 25;
+        i++
+    ) {
+
+        const casa =
+            document.createElement(
+                "div"
+            );
+
+        casa.className =
+            "quadrado";
+
+        casa.onclick =
+            function() {
+
+                clicar(i);
+
+            };
+
+        tabuleiro.appendChild(casa);
+
+    }
+
+}
+
+
+criarTabuleiro();
+
+
+function iniciar() {
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    saldo -= aposta;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    premios =
+        new Array(25).fill(0);
+
+
+    const escolhidos = [];
+
+
+    while (
+        escolhidos.length < 3
+    ) {
+
+        const numero =
+            Math.floor(
+                Math.random() * 25
+            );
+
+        if (
+            !escolhidos.includes(
+                numero
+            )
+        ) {
+
+            escolhidos.push(
+                numero
+            );
+
+        }
+
+    }
+
+
+    premios[
+        escolhidos[0]
+    ] = 3;
+
+    premios[
+        escolhidos[1]
+    ] = 2;
+
+    premios[
+        escolhidos[2]
+    ] = 2;
+
+
+    jogoAtivo = true;
+
+
+    document.getElementById(
+        "resultado"
+    ).textContent = "";
+
+
+    criarTabuleiro();
+
+}
+
+
+function clicar(posicao) {
+
+    if (!jogoAtivo) {
+        return;
+    }
+
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    const casas =
+        document.querySelectorAll(
+            ".quadrado"
+        );
+
+
+    casas.forEach(
+        function(casa, i) {
+
+            if (
+                premios[i] === 3
+            ) {
+
+                casa.innerHTML = "💎";
+
+                casa.style.background =
+                    "#9a7d16";
+
+            }
+
+            else if (
+                premios[i] === 2
+            ) {
+
+                casa.innerHTML = "💰";
+
+                casa.style.background =
+                    "#287a48";
+
+            }
+
+            else {
+
+                casa.innerHTML = "💣";
+
+                casa.style.background =
+                    "#8b2929";
+
+            }
+
+        }
+    );
+
+
+    if (
+        premios[posicao] === 3
+    ) {
+
+        saldo += aposta * 3;
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💎 Prêmio 3x!";
+
+    }
+
+    else if (
+        premios[posicao] === 2
+    ) {
+
+        saldo += aposta * 2;
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💰 Prêmio 2x!";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "resultado"
+        ).innerHTML =
+            "💣 Não havia prêmio.";
+
+    }
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    jogoAtivo = false;
+
+}
+
+
+
+
+let saldo = 100;
+
+let aposta = 0;
+
+let multiplicador = 1;
+
+let intervalo = null;
+
+let inicio = 0;
+
+let ativo = false;
+
+
+function iniciar() {
+
+    if (ativo) {
+        return;
+    }
+
+
+    aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    saldo -= aposta;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    multiplicador = 1;
+
+    inicio = Date.now();
+
+    ativo = true;
+
+
+    document.getElementById(
+        "começar"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "retirar"
+    ).disabled = false;
+
+
+    intervalo =
+        setInterval(
+            atualizar,
+            30
+        );
+
+}
+
+
+function atualizar() {
+
+    const tempo =
+        Date.now() - inicio;
+
+
+    multiplicador =
+        Math.pow(
+            1.03,
+            tempo / 250
+        );
+
+
+    document.getElementById(
+        "multiplicador"
+    ).textContent =
+        multiplicador.toFixed(2) + "x";
+
+
+    const rocket =
+        document.getElementById(
+            "rocket"
+        );
+
+
+    rocket.style.left =
+        (
+            40 +
+            tempo * 0.08
+        ) + "px";
+
+
+    rocket.style.bottom =
+        (
+            20 +
+            tempo * 0.03
+        ) + "px";
+
+}
+
+
+function retirar() {
+
+    if (!ativo) {
+        return;
+    }
+
+
+    clearInterval(
+        intervalo
+    );
+
+
+    const premio =
+        Math.round(
+            aposta *
+            multiplicador
+        );
+
+
+    saldo += premio;
+
+
+    document.getElementById(
+        "saldo"
+    ).textContent = saldo;
+
+
+    document.getElementById(
+        "resultado"
+    ).innerHTML =
+        "🎉 Você retirou em " +
+        multiplicador.toFixed(2) +
+        "x e recebeu " +
+        premio +
+        " pontos.";
+
+
+    finalizar();
+
+}
+
+
+function finalizar() {
+
+    ativo = false;
+
+
+    document.getElementById(
+        "começar"
+    ).disabled = false;
+
+
+    document.getElementById(
+        "retirar"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "rocket"
+    ).style.left = "40px";
+
+
+    document.getElementById(
+        "rocket"
+    ).style.bottom = "20px";
+
+
+    document.getElementById(
+        "multiplicador"
+    ).textContent = "1.00x";
+
+}
+
+
+
+
+let corEscolhida = "";
+
+let saldo = 100;
+
+let rotacao = 0;
+
+
+function escolher(cor) {
+
+    corEscolhida = cor;
+
+
+    document
+        .querySelectorAll(
+            "#amarelo, #verde, #azul"
+        )
+        .forEach(
+            function(botao) {
+
+                botao.classList.remove(
+                    "selecionado"
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById(cor)
+        .classList.add(
+            "selecionado"
+        );
+
+}
+
+
+function girar() {
+
+
+    if (
+        corEscolhida === ""
+    ) {
+
+        alert(
+            "Escolha uma cor primeiro!"
+        );
+
+        return;
+
+    }
+
+
+    const aposta =
+        parseInt(
+            document.getElementById(
+                "aposta"
+            ).value
+        );
+
+
+    if (
+        isNaN(aposta) ||
+        aposta <= 0
+    ) {
+
+        alert(
+            "Digite uma quantidade válida."
+        );
+
+        return;
+
+    }
+
+
+    if (aposta > saldo) {
+
+        alert(
+            "Você não possui pontos suficientes."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "girar"
+    ).disabled = true;
+
+
+    const sorteio =
+        Math.random() * 360;
+
+
+    rotacao +=
+        1800 + sorteio;
+
+
+    document.getElementById(
+        "wheel"
+    ).style.transform =
+        "rotate(" +
+        rotacao +
+        "deg)";
+
+
+    setTimeout(
+        function() {
+
+
+            const angulo =
+                rotacao % 360;
+
+
+            let resultado;
+
+
+            if (
+                angulo < 176
+            ) {
+
+                resultado =
+                    "amarelo";
+
+            }
+
+            else if (
+                angulo < 353
+            ) {
+
+                resultado =
+                    "verde";
+
+            }
+
+            else {
+
+                resultado =
+                    "azul";
+
+            }
+
+
+            if (
+                resultado ===
+                corEscolhida
+            ) {
+
+                saldo += aposta;
+
+
+                document
+                    .getElementById(
+                        "resultado"
+                    )
+                    .innerHTML =
+                    "🎉 Você acertou! +" +
+                    aposta +
+                    " pontos.";
+
+            }
+
+            else {
+
+                saldo -= aposta;
+
+
+                document
+                    .getElementById(
+                        "resultado"
+                    )
+                    .innerHTML =
+                    "A cor sorteada foi " +
+                    resultado +
+                    ".";
+
+            }
+
+
+            document
+                .getElementById(
+                    "saldo"
+                )
+                .textContent =
+                saldo;
+
+
+            document
+                .getElementById(
+                    "girar"
+                )
+                .disabled = false;
+
+
+        },
+        5000
+    );
+
+}
+
+
+
+function mostrarTela(id) {
+    document.querySelectorAll(".tela").forEach(function(tela) {
+        tela.classList.remove("ativa");
+    });
+    const tela = document.getElementById(id);
+    if (tela) {
+        tela.classList.add("ativa");
+        window.scrollTo(0, 0);
+    }
+}
+
+document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+
+    const destino = link.getAttribute("href").substring(1);
+    if (document.getElementById(destino)) {
+        event.preventDefault();
+        mostrarTela(destino);
+    }
+});
+
+document.addEventListener("click", function(event) {
+    const voltar = event.target.closest(".botao-voltar");
+    if (!voltar) return;
+
+    event.preventDefault();
+    mostrarTela("menu");
+});
+
+</script>
+
+</body>
+</html>
